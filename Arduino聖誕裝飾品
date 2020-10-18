@@ -176,6 +176,8 @@
 
 #define DS8 4978
 
+//以上程式碼是"pitch.h"的內容，在寫自主學習計劃時請注意 by Natsukusa
+
 int melody[] = {
   G4, G4 ,E5, D5, C5, G4,
   G4, G4, E5, D5, C5, A4,
