@@ -222,27 +222,27 @@ int melody[] = {
   
   int fadeAmount = 5;
   
-	int thisNote = 0;
+  int thisNote = 0;
 
 void setup() {
   pinMode(7, OUTPUT);
 }
 void loop() {   
     for (int thisNote = 0; thisNote < 98; thisNote++) {
-    analogWrite(7, brightness);
-    brightness = brightness + fadeAmount;
+    	analogWrite(7, brightness);
+   	brightness = brightness + fadeAmount;
     if (brightness <= 0 || brightness >= 255) {
-    fadeAmount = -fadeAmount ;
+    	tone(8, melody[thisNote], 250);
+    	delay(duration[thisNote]);
+	
+	//上面是控制蜂鳴器的部份 by Natsukusa 
+	
+    	fadeAmount = -fadeAmount ;
   }  
-  int potValue = analogRead(A0);
+ int potValue = analogRead(A0);
  int delayDuration = map(potValue, 0, 1023, 1, 50);
  
    //上面是控制LED燈的部份 by Natsukusa  
    
-    }
-    tone(8, melody[thisNote], 250);
-  delay(duration[thisNote]);
-      
-   //上面是控制蜂鳴器的部份 by Natsukusa  
-      
+    }  
 }
