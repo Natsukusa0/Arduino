@@ -1,248 +1,71 @@
-#define B0  31
 
-#define C1  33
 
-#define CS1 35
+#include <iostream>
 
-#define D1  37
+using namespace std;
 
-#define DS1 39
+int k[1000][1000] = {0};
 
-#define E1  41
+void knight(int, int, int);
 
-#define F1  44
 
-#define FS1 46
+int main()
+{
+    int m = 0;
+    int n = 0;
+    while(cin>>m>>n)
+    {
+        for(int i=0; i<m; i++)//
+        {
+            for(int j=0; j<n; j++)//
+            {
+                k[i][j] = 100;
+            }
+        }
 
-#define G1  49
+        int Sx = 0;
+        int Sy = 0;
+        int Ex = 0;
+        int Ey = 0;
 
-#define GS1 52
+        cin >> Sx >> Sy >> Ex >> Ey;
 
-#define A1  55
+        Sx--;
+        Sy--;
+        Ex--;
+        Ey--;
 
-#define AS1 58
 
-#define B1  62
+        knight(0, Sx, Sy);
 
-#define C2  65
+        if(k[Ey][Ex]==100)
+            k[Ey][Ex] = -1;
 
-#define CS2 69
+        cout << k[Ey][Ex] << endl;
 
-#define D2  73
 
-#define DS2 78
-
-#define E2  82
-
-#define F2  87
-
-#define FS2 93
-
-#define G2  98
-
-#define GS2 104
-
-#define A2  110
-
-#define AS2 117
-
-#define B2  123
-
-#define C3  131
-
-#define CS3 139
-
-#define D3  147
-
-#define DS3 156
-
-#define E3  165
-
-#define F3  175
-
-#define FS3 185
-
-#define G3  196
-
-#define GS3 208
-
-#define A3  220
-
-#define AS3 233
-
-#define B3  247
-
-#define C4  262
-
-#define CS4 277
-
-#define D4  294
-
-#define DS4 311
-
-#define E4  330
-
-#define F4  349
-
-#define FS4 370
-
-#define G4  392
-
-#define GS4 415
-
-#define A4  440
-
-#define AS4 466
-
-#define B4  494
-
-#define C5  523
-
-#define CS5 554
-
-#define D5  587
-
-#define DS5 622
-
-#define E5  659
-
-#define F5  698
-
-#define FS5 740
-
-#define G5  784
-
-#define GS5 831
-
-#define A5  880
-
-#define AS5 932
-
-#define B5  988
-
-#define C6  1047
-
-#define CS6 1109
-
-#define D6  1175
-
-#define DS6 1245
-
-#define E6  1319
-
-#define F6  1397
-
-#define FS6 1480
-
-#define G6  1568
-
-#define GS6 1661
-
-#define A6  1760
-
-#define AS6 1865
-
-#define B6  1976
-
-#define C7  2093
-
-#define CS7 2217
-
-#define D7  2349
-
-#define DS7 2489
-
-#define E7  2637
-
-#define F7  2794
-
-#define FS7 2960
-
-#define G7  3136
-
-#define GS7 3322
-
-#define A7  3520
-
-#define AS7 3729
-
-#define B7  3951
-
-#define C8  4186
-
-#define CS8 4435
-
-#define D8  4699
-
-#define DS8 4978
-
-//以上程式碼是"pitch.h"的內容，在寫自主學習計劃時請注意 by Natsukusa
-
-int melody[] = {
-  G4, G4 ,E5, D5, C5, G4,
-  G4, G4, E5, D5, C5, A4,
-  A4, A4, F5, E5, D5, A4,
-  G5, G5, F5, D5, E5, C5,
-  G4, G4, E5, D5, C5, G4,
-  G4, G4, E5, D5, C5, A4,
-  A4, F5, E5, D5, G5, G5, G5, G5,
-  A5, G5, F5, D5, C5,
-  E5, E5, E5, E5, E5, E5,
-  E5, G5, C5, D5, E5,
-  F5, F5, F5, F5, E5, E5, E5, E5,
-  E5, D5, D5, C5, D5, G5,
-  E5, E5, E5, E5, E5, E5,
-  E5, G5, C5, D5, E5,         
-  F5, F5, F5, F5, E5, E5, E5, E5,
-  G5, G5, F5, D5, C5};
-  
-  //以上是旋律 by Natsukusa
-  
-  int duration[] = {
-  250,250,250,250,250,500,  
-  250,250,250,250,250,500, 
-  250,250,250,250,250,500, 
-  250,250,250,250,250,1500, 
-  250,250,250,250,250,500, 
-  250,250,250,250,250,500,  
-  250,250,250,250,250,250,250,250,
-  250,250,250,250,500,           
-  250,250,500,250,250,500,       
-  250,250,250,250,500,           
-  250,250,250,250,250,250,250,250,
-  250,250,250,250,500,500,        
-  250,250,500,250,250,500,        
-  250,250,250,250,500,            
-  250,250,250,250,250,250,250,250,
-  250,250,250,250,1000}; 
-  
-  //以上是單個音的持續時間 by Natsukusa
-  
-  int brightness = 0;
-  
-  int fadeAmount = 5;
-  
-  int thisNote = 0;
-
-void setup() {
-  pinMode(7, OUTPUT);
+    }
 }
-void loop() {   
-    for (int thisNote = 0; thisNote < 98; thisNote++) {
-    	analogWrite(7, brightness);
-   	brightness = brightness + fadeAmount;
-    if (brightness <= 0 || brightness >= 255) {
-    	tone(8, melody[thisNote], 250);
-    	delay(duration[thisNote]);
-	
-	//上面是控制蜂鳴器的部份 by Natsukusa 
-	
-    	fadeAmount = -fadeAmount ;
-  }  
- int potValue = analogRead(A0);
- int delayDuration = map(potValue, 0, 1023, 1, 50);
- 
-   //上面是控制LED燈的部份 by Natsukusa  
-   
-    }  
+
+void knight(int s, int x, int y)
+{
+    if(s<999)
+    {
+        if((x<n)&&(x>=0)&&(y<m)&&(y>=0))
+        {
+            if(k[y][x]>s)
+            {
+                k[y][x] = s;
+
+                knight(s+1, x-1, y-2);
+                knight(s+1, x-2, y-1);
+                knight(s+1, x+1, y-2);
+                knight(s+1, x+2, y-1);
+                knight(s+1, x+1, y+2);
+                knight(s+1, x+2, y+1);
+                knight(s+1, x-1, y+2);
+                knight(s+1, x-2, y+1);
+            }
+        }
+    }
 }
