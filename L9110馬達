@@ -5,7 +5,7 @@ const int IB = 6;
 byte speed = 255;  // 控制馬達旋轉速度(0-255) 
  
 void setup() {
-  pinMode(IA, OUTPUT);  //只要向輸入端IA/IB輸入高電平則為轉動，IA 正轉，IB為反轉。
+  pinMode(IA, OUTPUT);  //只要向輸入端IA/IB輸入高電位就會轉動，IA 正轉，IB為反轉。
   pinMode(IB, OUTPUT);
   Serial.begin(9600);
 }
