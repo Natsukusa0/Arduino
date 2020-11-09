@@ -1,12 +1,36 @@
-int INA = 8;
-int INB = 7;
-
-void setup(){
-  pinMode(INA,OUTPUT);
-  pinMode(INB,OUTPUT);
+const int IA = 5; 
+const int IB = 6;  
+ 
+ 
+byte speed = 255;  // 控制馬達旋轉速度(0-255) 
+ 
+void setup() {
+  pinMode(IA, OUTPUT);  //只要向輸入端IA/IB輸入高電平則為轉動，IA 正轉，IB為反轉。
+  pinMode(IB, OUTPUT);
+  Serial.begin(9600);
 }
-
-void loop(){
-  digitalWrite(INA,LOW);
-  digitalWrite(INB,HIGH);
+ 
+void loop() {
+ 
+  int offsetX=525; 
+  
+  int x =analogRead(A0);
+ 
+  bool isFoward = x <= offsetX;  
+  speed = x==offsetX ? 0: (isFoward ? (255- map(x,0,offsetX,0,255)): map(x,0,1024,0,255));
+  Serial.println(speed);
+  isFoward ? forward() : backward();  
+}
+ 
+void backward()
+{
+  analogWrite(IA, 0);
+  analogWrite(IB, speed);
+}
+ 
+void forward()
+{
+  analogWrite(IA, speed);
+  analogWrite(IB, 0);
+ 
 }
