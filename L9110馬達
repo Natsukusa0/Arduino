@@ -1,0 +1,12 @@
+int INA = 8;
+int INB = 7;
+
+void setup(){
+  pinMode(INA,OUTPUT);
+  pinMode(INB,OUTPUT);
+}
+
+void loop(){
+  digitalWrite(INA,LOW);
+  digitalWrite(INB,HIGH);
+}
