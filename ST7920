@@ -2,7 +2,7 @@
 #define AR_SIZE( a ) sizeof( a ) / sizeof( a[0] )
  
 unsigned char show0[]= {,,,,,,,};  //在此輸入BIG5的中文編碼
-unsigned char show1[]="Hank Chen have a very fucking small dick"; //英文可直接輸入
+unsigned char show1[]="Text message"; //英文可直接輸入
 unsigned char messageString[]={
   0xB3, 0xD0,
   0xAB, 0xC8,
@@ -15,7 +15,6 @@ unsigned char messageString[]={
 void setup()
 {
 LCDA.Initialise(); // 初始化
-delay(100);
 delay(100);  //這個延遲是必要的，不然下一個指令會有問題。
 LCDA.DisplayString(0,2,show0,AR_SIZE(show0));//第一行第三格開始顯示文字
 delay(100);
