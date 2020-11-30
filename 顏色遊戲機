@@ -1,0 +1,73 @@
+include “LCD12864RSPI.h”   //ST7920顯示繁體中文所需函式庫
+#define AR_SIZE( a ) sizeof( a ) / sizeof( a[0] )
+
+int led_red = 1, led_yellow = 2, led_green = 3, led_blue = 4;
+int ledStateA = LOW;
+int button_red = 5, button_yellow = 6, button_green = 7, button_blue = 8
+int RS = 9, RW = 10, E = 11;
+int r = 0;
+byte value_red;
+byte value_yellow;
+byte value_green;
+byte value_blue;
+
+
+void setup() {
+pinMode(led_red, OUTPUT);
+pinMode(led_yellow, OUTPUT);
+pinMode(led_green, OUTPUT);
+pinMode(led_blue, OUTPUT);
+pinMode(button_red,INPUT);
+pinMode(button_yellow,INPUT);
+pinMode(button_green,INPUT);
+pinMode(button_blue,INPUT);
+
+LCDA.Initialise(); // 初始化
+delay(100);
+LCDA.CLEAR();//清除畫面
+delay(100);  //這個延遲是必要的，不然下一個指令會有問題。
+LCDA.DisplayString(0,2,show0,AR_SIZE(show0));//第一行第三格開始顯示文字
+delay(100);
+LCDA.DisplayString(1,1,messageString,AR_SIZE(messageString));//第二行第二格開始顯示文字
+delay(5000);
+}
+
+void loop(){
+  for(int i = 100 ; i >= 1 ;i--){
+    r = random(1,4);
+    digitalWrite(r, HIGH);
+    delay(i*100);
+  if(r == 1){
+    if (value_red == 1){
+      point++;
+    }
+    else{
+      point--;
+    }
+  }
+  else if(r == 2){
+    if (value_yellow == 1){
+      point++;
+    }
+    else{
+      point--;
+    }
+  }
+  else if(r == 3){
+    if (value_green == 1){
+      point++;
+    }
+    else{
+      point--;
+    }
+  }
+  else if(r == 4){
+    if (value_blue == 1){
+      point++;
+    }
+    else{
+      point--;
+    }
+  }
+}
+}
