@@ -1,3 +1,7 @@
+#include <LiquidCrystal_PCF8574.h>
+
+LiquidCrystal_PCF8574 lcd(0x27); 
+
 int led_red = 1, led_yellow = 2, led_green = 3, led_blue = 4;
 int button_red = 5, button_yellow = 6, button_green = 7, button_blue = 8;
 int RS = 9, RW = 10, E = 11;
@@ -8,11 +12,12 @@ unsigned long tt = 5000;
 int buttonState_red = 0, buttonState_yellow = 0, buttonState_green = 0, buttonState_blue = 0;
 
 void setup() {
-  Serial.begin(9600);
-}
-
-void loop() {
-    pinMode(button_red, INPUT);
+  lcd.begin(16, 2);
+  lcd.setBacklight(255);
+  lcd.clear();
+  lcd.setCursor(0, 0); 
+  lcd.print("Point:");
+  pinMode(button_red, INPUT);
     pinMode(button_yellow, INPUT);
     pinMode(button_green, INPUT);
     pinMode(button_blue, INPUT);
@@ -20,68 +25,58 @@ void loop() {
     buttonState_yellow = digitalRead(button_yellow);
     buttonState_green = digitalRead(button_green);
     buttonState_blue = digitalRead(button_blue);
-    for (int i = 100; i >= 1; i--) {
-        r = random(1, 5);
+}
+
+void loop() {
+    r = random(1, 5);
+        lcd.setCursor(0, 1); 
+        lcd.print(point);
         digitalWrite(r, HIGH);
+        delay(750);
         pinMode(r, OUTPUT);
         pinMode(button_red, INPUT);
         pinMode(button_yellow, INPUT);
         pinMode(button_green, INPUT);
         pinMode(button_blue, INPUT);
         digitalWrite(r, LOW);
-        temp = millis();
         if (r == 1) {
-            while (millis() < temp + tt) {
                 if (buttonState_red == HIGH) {
                     point++;
                     digitalWrite(r, LOW);
                 }
-                else {
-                    point--;
+                else if(buttonState_red == LOW){
+                  point--;
                     digitalWrite(r, LOW);
                 }
-                break;
-            }
         }
         else if (r == 2) {
-            while (millis() < temp + tt) {
                 if (buttonState_yellow == HIGH) {
                     point++;
                     digitalWrite(r, LOW);
                 }
-                else {
-                    point--;
+                else if(buttonState_yellow == LOW){
+                  point--;
                     digitalWrite(r, LOW);
                 }
-                break;
-            }
         }
         else if (r == 3) {
-            while (millis() < temp + tt) {
                 if (buttonState_green == HIGH) {
                     point++;
                     digitalWrite(r, LOW);
                 }
-                else {
-                    point--;
+                else if(buttonState_green == LOW){
+                  point--;
                     digitalWrite(r, LOW);
                 }
-                break;
-            }
         }
         else if (r == 4) {
-            while (millis() < temp + tt) {
                 if (buttonState_blue == HIGH) {
                     point++;
                     digitalWrite(r, LOW);
                 }
-                else {
-                    point--;
+                else if(buttonState_blue == LOW){
+                  point--;
                     digitalWrite(r, LOW);
                 }
-              break;
-            }
         }
-        
-    }
 }
