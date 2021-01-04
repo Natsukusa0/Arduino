@@ -1,73 +1,82 @@
-include “LCD12864RSPI.h”   //ST7920顯示繁體中文所需函式庫
-#define AR_SIZE( a ) sizeof( a ) / sizeof( a[0] )
+#include <LiquidCrystal_PCF8574.h>
+
+LiquidCrystal_PCF8574 lcd(0x27); 
 
 int led_red = 1, led_yellow = 2, led_green = 3, led_blue = 4;
-int ledStateA = LOW;
-int button_red = 5, button_yellow = 6, button_green = 7, button_blue = 8
+int button_red = 5, button_yellow = 6, button_green = 7, button_blue = 8;
 int RS = 9, RW = 10, E = 11;
+int point = 0;
 int r = 0;
-byte value_red;
-byte value_yellow;
-byte value_green;
-byte value_blue;
-
+unsigned long temp = 0;
+unsigned long tt = 5000;
+int buttonState_red = 0, buttonState_yellow = 0, buttonState_green = 0, buttonState_blue = 0;
 
 void setup() {
-pinMode(led_red, OUTPUT);
-pinMode(led_yellow, OUTPUT);
-pinMode(led_green, OUTPUT);
-pinMode(led_blue, OUTPUT);
-pinMode(button_red,INPUT);
-pinMode(button_yellow,INPUT);
-pinMode(button_green,INPUT);
-pinMode(button_blue,INPUT);
-
-LCDA.Initialise(); // 初始化
-delay(100);
-LCDA.CLEAR();//清除畫面
-delay(100);  //這個延遲是必要的，不然下一個指令會有問題。
-LCDA.DisplayString(0,2,show0,AR_SIZE(show0));//第一行第三格開始顯示文字
-delay(100);
-LCDA.DisplayString(1,1,messageString,AR_SIZE(messageString));//第二行第二格開始顯示文字
-delay(5000);
+  lcd.begin(16, 2);
+  lcd.setBacklight(255);
+  lcd.clear();
+  lcd.setCursor(0, 0); 
+  lcd.print("Point:");
+  pinMode(button_red, INPUT);
+    pinMode(button_yellow, INPUT);
+    pinMode(button_green, INPUT);
+    pinMode(button_blue, INPUT);
+    buttonState_red = digitalRead(button_red);
+    buttonState_yellow = digitalRead(button_yellow);
+    buttonState_green = digitalRead(button_green);
+    buttonState_blue = digitalRead(button_blue);
 }
 
-void loop(){
-  for(int i = 100 ; i >= 1 ;i--){
-    r = random(1,4);
-    digitalWrite(r, HIGH);
-    delay(i*100);
-  if(r == 1){
-    if (value_red == 1){
-      point++;
-    }
-    else{
-      point--;
-    }
-  }
-  else if(r == 2){
-    if (value_yellow == 1){
-      point++;
-    }
-    else{
-      point--;
-    }
-  }
-  else if(r == 3){
-    if (value_green == 1){
-      point++;
-    }
-    else{
-      point--;
-    }
-  }
-  else if(r == 4){
-    if (value_blue == 1){
-      point++;
-    }
-    else{
-      point--;
-    }
-  }
-}
+void loop() {
+    r = random(1, 5);
+        lcd.setCursor(0, 1); 
+        lcd.print(point);
+        digitalWrite(r, HIGH);
+        delay(750);
+        pinMode(r, OUTPUT);
+        pinMode(button_red, INPUT);
+        pinMode(button_yellow, INPUT);
+        pinMode(button_green, INPUT);
+        pinMode(button_blue, INPUT);
+        digitalWrite(r, LOW);
+        if (r == 1) {
+                if (buttonState_red == HIGH) {
+                    point++;
+                    digitalWrite(r, LOW);
+                }
+                else if(buttonState_red == LOW){
+                  point--;
+                    digitalWrite(r, LOW);
+                }
+        }
+        else if (r == 2) {
+                if (buttonState_yellow == HIGH) {
+                    point++;
+                    digitalWrite(r, LOW);
+                }
+                else if(buttonState_yellow == LOW){
+                  point--;
+                    digitalWrite(r, LOW);
+                }
+        }
+        else if (r == 3) {
+                if (buttonState_green == HIGH) {
+                    point++;
+                    digitalWrite(r, LOW);
+                }
+                else if(buttonState_green == LOW){
+                  point--;
+                    digitalWrite(r, LOW);
+                }
+        }
+        else if (r == 4) {
+                if (buttonState_blue == HIGH) {
+                    point++;
+                    digitalWrite(r, LOW);
+                }
+                else if(buttonState_blue == LOW){
+                  point--;
+                    digitalWrite(r, LOW);
+                }
+        }
 }
